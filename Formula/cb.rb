@@ -1,30 +1,30 @@
 class Cb < Formula
   desc "Disposable git worktree manager"
   homepage "https://github.com/ryaninvents/compare-branch"
-  version "0.1.0"
+  version "0.2.0"
   license "MIT"
 
   depends_on "git"
 
   on_macos do
     on_arm do
-      url "https://github.com/ryaninvents/compare-branch/releases/download/0.1.0/cb-0.1.0-macos-arm64.tar.gz"
-      sha256 "7efd020cea79353ff801f640720b42118b0fde8df2fa0980f5a4867be3304404"
+      url "https://github.com/ryaninvents/compare-branch/releases/download/v0.2.0/cb-v0.2.0-macos-arm64.tar.gz"
+      sha256 "5e4dce952f3d6765dca02815419381e0da54d6013bdfb25d56ed1a764d11ad7d"
     end
     on_intel do
-      url "https://github.com/ryaninvents/compare-branch/releases/download/0.1.0/cb-0.1.0-macos-x86_64.tar.gz"
-      sha256 "8f5d23b9807d55a1bf2756e22b38e03172ba9ad4f655acca754ac0938bf9ef9b"
+      url "https://github.com/ryaninvents/compare-branch/releases/download/v0.2.0/cb-v0.2.0-macos-x86_64.tar.gz"
+      sha256 "1871be41ceccfddaf9f54f730ecb0c45937ade744d36a684b720af0e5bdcf5d1"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/ryaninvents/compare-branch/releases/download/0.1.0/cb-0.1.0-linux-arm64.tar.gz"
-      sha256 "3182435261c22a64252aff7f6deb66bb888d1c963d66ca3db6d732947703852c"
+      url "https://github.com/ryaninvents/compare-branch/releases/download/v0.2.0/cb-v0.2.0-linux-arm64.tar.gz"
+      sha256 "ffbb37e8af83863ee952620f94b9fb4dbf3b01a3d5c663f912e6071778a0c9cf"
     end
     on_intel do
-      url "https://github.com/ryaninvents/compare-branch/releases/download/0.1.0/cb-0.1.0-linux-x86_64.tar.gz"
-      sha256 "6f5ed9f04cf348083e756f37c85529175974b98954169f84481cb9497813b3b3"
+      url "https://github.com/ryaninvents/compare-branch/releases/download/v0.2.0/cb-v0.2.0-linux-x86_64.tar.gz"
+      sha256 "b9f806f54a9f9524d8261d7966f4948c3589c0e64195721a963971b0db82865e"
     end
   end
 
