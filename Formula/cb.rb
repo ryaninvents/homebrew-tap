@@ -1,30 +1,30 @@
 class Cb < Formula
   desc "Disposable git worktree manager"
   homepage "https://github.com/ryaninvents/compare-branch"
-  version "0.3.0"
+  version "0.5.0"
   license "MIT"
 
   depends_on "git"
 
   on_macos do
     on_arm do
-      url "https://github.com/ryaninvents/compare-branch/releases/download/v0.3.0/cb-v0.3.0-macos-arm64.tar.gz"
-      sha256 "41b5aea850c065fc135c96f31ccc59995b061fd9d3922498d5f318595db76f9e"
+      url "https://github.com/ryaninvents/compare-branch/releases/download/v0.5.0/cb-v0.5.0-macos-arm64.tar.gz"
+      sha256 "f6923647e8a478eeea3146bf9f6a9a8a3b59a5bae2501d587635f3185bce6eb2"
     end
     on_intel do
-      url "https://github.com/ryaninvents/compare-branch/releases/download/v0.3.0/cb-v0.3.0-macos-x86_64.tar.gz"
-      sha256 "e6c10cf387f405d6a993813313476fc1738f6581a870f756f6e20499484517eb"
+      url "https://github.com/ryaninvents/compare-branch/releases/download/v0.5.0/cb-v0.5.0-macos-x86_64.tar.gz"
+      sha256 "9f0395d1b9c84c7ed28a88c5d9fa9cbea6df235b956ccda1a954b6c3400f20fd"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/ryaninvents/compare-branch/releases/download/v0.3.0/cb-v0.3.0-linux-arm64.tar.gz"
-      sha256 "d6063ba105f8772b2ecf38506fe30032d803d50cd4b7e13a977b5cf2c1b060cc"
+      url "https://github.com/ryaninvents/compare-branch/releases/download/v0.5.0/cb-v0.5.0-linux-arm64.tar.gz"
+      sha256 "716bfe2312781a46088da7f0d0807e732ae9250f90a336b56c3d6253672751b5"
     end
     on_intel do
-      url "https://github.com/ryaninvents/compare-branch/releases/download/v0.3.0/cb-v0.3.0-linux-x86_64.tar.gz"
-      sha256 "bc1436e8c2aa58b94df28b03f01b54a8169754b7f637307222ab37e51ec68486"
+      url "https://github.com/ryaninvents/compare-branch/releases/download/v0.5.0/cb-v0.5.0-linux-x86_64.tar.gz"
+      sha256 "399033ec4b61dbda5d6ced48a5f3311255341aefaf3dfa15e1797ead7faf1511"
     end
   end
 
@@ -35,6 +35,12 @@ class Cb < Formula
     # Completion: zsh onto fpath, bash into bash_completion.d.
     zsh_completion.install "completions/_cb"
     bash_completion.install "completions/cb.bash" => "cb"
+    # Man pages. Homebrew puts share/man on MANPATH automatically, so `man cb`
+    # works with no extra setup — unlike shell integration, this needs no
+    # caveat.
+    man1.install "man/cb.1"
+    man5.install "man/cb-config.5"
+    man7.install "man/cb-review.7"
   end
 
   def caveats
