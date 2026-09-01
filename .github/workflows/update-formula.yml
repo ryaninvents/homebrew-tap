@@ -1,0 +1,72 @@
+name: update-formula
+
+# Pulls a project's already-rendered Formula/<name>.rb from its latest GitHub
+# release and commits it here. The project owns the formula's content (see
+# e.g. ryaninvents/compare-branch's scripts/formula/cb.rb.ejs) — this workflow
+# only fetches and checks in whatever that project's release process produced.
+#
+# Triggered automatically at the end of a project's own release
+# (`gh workflow run update-formula.yml -f project=<name>`), or manually from
+# the Actions tab.
+#
+# Adding a project: add it to `projects.json` (repo/formula/asset) *and* to
+# the `project` input's `options` below — GitHub Actions can't read the
+# choice list from a file, so the two must be kept in sync by hand.
+on:
+  workflow_dispatch:
+    inputs:
+      project:
+        description: Project to pull the formula update from
+        required: true
+        type: choice
+        options:
+          - compare-branch
+
+permissions:
+  contents: write
+
+jobs:
+  update-formula:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve project
+        id: project
+        run: |
+          entry="$(jq -e --arg key "${{ inputs.project }}" '.[$key] // empty' projects.json)"
+          if [ -z "$entry" ]; then
+            echo "::error::unknown project '${{ inputs.project }}' (not in projects.json)"
+            exit 1
+          fi
+          {
+            echo "repo=$(jq -r '.repo' <<<"$entry")"
+            echo "formula=$(jq -r '.formula' <<<"$entry")"
+            echo "asset=$(jq -r '.asset' <<<"$entry")"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Fetch latest formula asset
+        env:
+          # If the source repo is private, set a PAT with read access as
+          # SOURCE_REPO_TOKEN; public release assets need no auth at all.
+          GH_TOKEN: ${{ secrets.SOURCE_REPO_TOKEN || github.token }}
+        run: |
+          mkdir -p Formula
+          gh release download --repo "${{ steps.project.outputs.repo }}" \
+            --pattern "${{ steps.project.outputs.asset }}" \
+            --output "Formula/${{ steps.project.outputs.formula }}" \
+            --clobber
+
+      - name: Commit and push
+        run: |
+          formula_path="Formula/${{ steps.project.outputs.formula }}"
+          if git diff --quiet -- "$formula_path"; then
+            echo "no change to $formula_path"
+            exit 0
+          fi
+          version="$(sed -n 's/^ *version "\(.*\)"$/\1/p' "$formula_path")"
+          git config user.name "homebrew-tap bot"
+          git config user.email "noreply@github.com"
+          git add "$formula_path"
+          git commit -m "${{ inputs.project }} ${version:-update}"
+          git push

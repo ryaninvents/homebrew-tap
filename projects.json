@@ -1,0 +1,7 @@
+{
+  "compare-branch": {
+    "repo": "ryaninvents/compare-branch",
+    "formula": "cb.rb",
+    "asset": "cb.rb"
+  }
+}
