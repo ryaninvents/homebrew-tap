@@ -3,5 +3,10 @@
     "repo": "ryaninvents/compare-branch",
     "formula": "cb.rb",
     "asset": "cb.rb"
+  },
+  "polymodel": {
+    "repo": "ryaninvents/polymodel",
+    "formula": "polymodel.rb",
+    "asset": "polymodel.rb"
   }
 }
