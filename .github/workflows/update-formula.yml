@@ -61,7 +61,8 @@ jobs:
       - name: Commit and push
         run: |
           formula_path="Formula/${{ steps.project.outputs.formula }}"
-          if git diff --quiet -- "$formula_path"; then
+          # `git diff` ignores untracked files, which would skip a project's first formula.
+          if [ -z "$(git status --porcelain -- "$formula_path")" ]; then
             echo "no change to $formula_path"
             exit 0
           fi
